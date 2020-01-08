@@ -1,5 +1,5 @@
 {
-  "name": "herokusatter",
+  "name": "pixela-journal-tweet",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
@@ -8,17 +8,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nimiri/herokusatter.git"
+    "url": "git+https://github.com/nimiri/pixela-journal-tweet.git"
   },
   "author": "nimiri",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nimiri/herokusatter/issues"
+    "url": "https://github.com/nimiri/pixela-journal-tweet/issues"
   },
-  "homepage": "https://github.com/nimiri/herokusatter#readme",
+  "homepage": "https://github.com/nimiri/pixela-journal-tweet#readme",
   "dependencies": {
+    "date-utils": "^1.2.21",
     "dotenv": "^8.2.0",
+    "fs": "0.0.1-security",
     "request": "^2.88.0",
-    "request-promise": "^4.2.5"
+    "request-promise": "^4.2.5",
+    "sharp": "^0.23.4"
   }
 }
