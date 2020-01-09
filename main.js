@@ -64,9 +64,10 @@ let get_pixela_svg = rp({
     uri: 'https://pixe.la/v1/users/' + PIXELA_USER + '/graphs/' + PIXELA_GRAPH_ID + '?mode=short',
     timeout: 30 * 1000
   }).then(function (res){
-
-    // SVGをPNGに変換して保存
+    // SVGを保存
     fs.writeFileSync('pixela.svg', res, 'binary');
+  }).then(function() {
+    // PNGに変換
     sharp(imageName + '.svg')
       .flatten({ background: { r: 255, g: 255, b: 255 } })
       .resize(880)
