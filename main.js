@@ -49,6 +49,8 @@ let get_pixela_quantity = rp({
       `今日は、${PIXELA_GRAPH_ID}で${res.quantity}回、草を生やすことができました！` :
       `今日は、${PIXELA_GRAPH_ID}で草を生やすことができませんでした…`;
 
+    console.log('[SUCCESS] GET Quantity');
+
     return desc + '\nhttps://pixe.la/v1/users/' + PIXELA_USER + '/graphs/' + PIXELA_GRAPH_ID + '.html'
   }).catch(function (res){
     // 404だったら、pixelがないとみなす。
@@ -64,15 +66,17 @@ let get_pixela_svg = rp({
     uri: 'https://pixe.la/v1/users/' + PIXELA_USER + '/graphs/' + PIXELA_GRAPH_ID + '?mode=short',
     timeout: 30 * 1000
   }).then(function (res){
+    console.log('[SUCCESS] GET SVG');
+
     // SVGを保存
-    fs.writeFileSync('pixela.svg', res, 'binary');
+    fs.writeFileSync(imageName + '.svg', res, 'binary');
   }).then(function() {
     // PNGに変換
     sharp(imageName + '.svg')
       .flatten({ background: { r: 255, g: 255, b: 255 } })
       .resize(880)
       .png()
-      .toFile(imageName + ".png")
+      .toFile(imageName + '.png')
   })
 
 // Promise群を実行
@@ -81,10 +85,12 @@ Promise.all([
   get_pixela_svg
 ])
 .then(function (res) {
+
+  // 投稿する画像
+  const graphImage = fs.readFileSync(imageName + '.png');
+
   // Twitterに投稿
   (async () => {
-    // 投稿する画像
-    const graphImage = fs.readFileSync(imageName + '.png');
 
     // 画像のアップロード
     const media = await client.post('media/upload', {media: graphImage});
