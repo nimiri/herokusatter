@@ -3,12 +3,25 @@
 var rp = require('request-promise');
 require('date-utils');
 var fs = require('fs');
-const sharp = require("sharp")
-
+const sharp = require("sharp");
+const commandLineArgs = require('command-line-args');
 require('dotenv').config();
 
-let PIXELA_USER = getEnvValue('PIXELA_USER');
-let PIXELA_GRAPH_ID = getEnvValue('PIXELA_GRAPH_ID');
+const optionDefinitions = [
+  {
+    name: 'user',
+    type: String
+  },
+  {
+    name: 'graphid',
+    type: String,
+  }
+];
+
+const options = commandLineArgs(optionDefinitions);
+
+let PIXELA_USER = getOptionValue('user');
+let PIXELA_GRAPH_ID = getOptionValue('graphid');
 let PIXELA_X_USER_TOKEN = getEnvValue('PIXELA_X_USER_TOKEN');
 
 // 0時に実行するので、前日の日付を取得
@@ -65,6 +78,17 @@ Promise.all([
     // API call failed...
     console.log(err)
 });
+
+// 実行時引数から読み込むための関数
+function getOptionValue(key) {
+  let value = options[key];
+  if (typeof value === 'undefined') {
+      console.log(`${key} is not defined`);
+      process.exit(1);
+  }
+
+  return value;
+}
 
 // .envから読み込むための関数
 function getEnvValue(key) {

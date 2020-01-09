@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/nimiri/pixela-journal-tweet#readme",
   "dependencies": {
+    "command-line-args": "^5.1.1",
     "date-utils": "^1.2.21",
     "dotenv": "^8.2.0",
     "fs": "0.0.1-security",
