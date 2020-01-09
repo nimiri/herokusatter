@@ -68,15 +68,12 @@ let get_pixela_svg = rp({
   }).then(function (res){
     console.log('[SUCCESS] GET SVG');
 
-    // SVGを保存
-    fs.writeFileSync(imageName + '.svg', res, 'binary');
-  }).then(function() {
-    // PNGに変換
-    sharp(imageName + '.svg')
+    // SVGをPNGに変換
+    return sharp(new Buffer(res))
       .flatten({ background: { r: 255, g: 255, b: 255 } })
       .resize(880)
       .png()
-      .toFile(imageName + '.png')
+      .toBuffer();
   })
 
 // Promise群を実行
@@ -86,27 +83,25 @@ Promise.all([
 ])
 .then(function (res) {
 
-  // 投稿する画像
-  const graphImage = fs.readFileSync(imageName + '.png');
-
   // Twitterに投稿
   (async () => {
 
     // 画像のアップロード
-    const media = await client.post('media/upload', {media: graphImage});
+    const media = await client.post('media/upload', {media: res[1]});
 
     // Twitterに投稿
     const status = {
         status: res[0],
         media_ids: media.media_id_string // Pass the media id string
     }
-    const response = await client.post('statuses/update', status);
-    console.log(response);
+    
+    client.post('statuses/update', status);
   })();
 })
 .catch(function (err) {
     // API call failed...
-    console.log(err)
+    console.log(err);
+    process.exit(1);
 });
 
 // 実行時引数から読み込むための関数
