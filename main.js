@@ -83,7 +83,7 @@ Promise.all([
   // Twitterに投稿
   (async () => {
     // 投稿する画像
-    const graphImage = require('fs').readFileSync(imageName + '.png');
+    const graphImage = fs.readFileSync(imageName + '.png');
 
     // 画像のアップロード
     const media = await client.post('media/upload', {media: graphImage});
