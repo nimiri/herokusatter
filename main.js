@@ -7,7 +7,6 @@ const fs = require('fs');
 const sharp = require("sharp");
 const commandLineArgs = require('command-line-args');
 const twitter = require('twitter');
-const imageName = 'pixela';
 
 const optionDefinitions = [
   {
@@ -24,7 +23,6 @@ const options = commandLineArgs(optionDefinitions);
 
 let PIXELA_USER = getOptionValue('user');
 let PIXELA_GRAPH_ID = getOptionValue('graphid');
-let PIXELA_X_USER_TOKEN = getEnvValue('PIXELA_X_USER_TOKEN');
 
 const client = new twitter({
   consumer_key: getEnvValue('TWITTER_CONSUMER_KEY'),
@@ -38,15 +36,12 @@ let targetDate = Date.yesterday().toFormat("YYYYMMDD");
 
 // 草を生やした数を取得する
 let get_pixela_quantity = rp({
-    uri: 'https://pixe.la/v1/users/' + PIXELA_USER + '/graphs/' + PIXELA_GRAPH_ID + '/' + targetDate,
+    uri: 'https://pixe.la/v1/users/' + PIXELA_USER + '/graphs/' + PIXELA_GRAPH_ID + '/stats',
     timeout: 30 * 1000,
-    headers: {
-        'X-USER-TOKEN': PIXELA_X_USER_TOKEN
-    },
     json: true
   }).then(function (res){
     let desc = res.quantity >= 1 ? 
-      `今日は、${PIXELA_GRAPH_ID}で${res.quantity}回、草を生やすことができました！` :
+      `今日は、${PIXELA_GRAPH_ID}で${res.todaysQuantity}回、草を生やすことができました！` :
       `今日は、${PIXELA_GRAPH_ID}で草を生やすことができませんでした…`;
 
     console.log('[SUCCESS] GET Quantity');
