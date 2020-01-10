@@ -31,16 +31,13 @@ const client = new twitter({
   access_token_secret: getEnvValue('TWITTER_ACCESS_TOKEN_SECRET')
 });
 
-// 0時に実行するので、前日の日付を取得
-let targetDate = Date.yesterday().toFormat("YYYYMMDD");
-
 // 草を生やした数を取得する
 let get_pixela_quantity = rp({
     uri: 'https://pixe.la/v1/users/' + PIXELA_USER + '/graphs/' + PIXELA_GRAPH_ID + '/stats',
     timeout: 30 * 1000,
     json: true
   }).then(function (res){
-    let desc = res.quantity >= 1 ? 
+    let desc = res.todaysQuantity >= 1 ? 
       `今日は、${PIXELA_GRAPH_ID}で${res.todaysQuantity}回、草を生やすことができました！` :
       `今日は、${PIXELA_GRAPH_ID}で草を生やすことができませんでした…`;
 
