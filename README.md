@@ -21,6 +21,10 @@ npm run journal-tweet -- --user {YOUR_USER_NAME} --graphid {YOUR_GRAPH_ID}
 
 ## In English
 
+### Overview
+This repository is a script by `Node.js` for tweeting Pixela graphs daily.
+This document assumes that a graph already exists in Pixela.
+
 ### How To Use
 
 #### Setting Environment
