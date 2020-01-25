@@ -6,8 +6,8 @@
 [Pixela](https://pixe.la/ja) のグラフを毎日ツイートするための `Node.js` によるスクリプトです。
 
 このドキュメントでは、
-・Pixelaですでにグラフが存在している
-・TwitterのDeveloper登録が完了し、アプリが作成されている
+- Pixelaですでにグラフが存在している
+- TwitterのDeveloper登録が完了し、アプリが作成されている
 
 という状態を前提としています。
 
