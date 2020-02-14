@@ -38,6 +38,8 @@ This document assumes that a graph already exists in Pixela.
 Create `.env` in the same directory based on `.env-templete`.
 Change the values of the `.env` to your environment.
 
+* In order to perform this operation, you need to register as a Twitter developer
+
 #### Run
 Execute the following command.
 Change the values of `{}` according to your environment.
